@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм (простой)»
 
 * Студент: [Vladimir Kabin](https://up.htmlacademy.ru/javascript/27/user/1479115).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Иванов](https://htmlacademy.ru/profile/id342945).
 
 ---
 
