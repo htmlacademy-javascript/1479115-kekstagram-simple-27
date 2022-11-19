@@ -1,3 +1,4 @@
+import './picture-viewer.js';
 import {createPhoto} from './data.js';
 import { createPhotoElement } from './picture-creation.js';
 

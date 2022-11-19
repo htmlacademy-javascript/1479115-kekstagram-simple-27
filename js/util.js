@@ -11,3 +11,5 @@ export function getRandomPositiveInteger(a, b) {
 export function checkStringLength(string, length) {
   return string.length <= length;
 }
+
+export const isEscapeKey = (e) => e.key === 'Escape';
