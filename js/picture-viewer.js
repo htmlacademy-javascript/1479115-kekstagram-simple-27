@@ -1,4 +1,4 @@
-import { isEscapeKey } from "./util.js";
+import { isEscapeKey } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
 const formInput = document.querySelector('#upload-file');
@@ -31,7 +31,6 @@ function handleEsqKeydown (evt) {
     closeModal();
   }
 }
-
 
 // //Валидация комментария в форме
 const pristine = new Pristine(form, {
