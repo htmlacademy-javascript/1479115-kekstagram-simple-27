@@ -9,13 +9,13 @@ const mainPage = document.querySelector('body');
 const openModal = () => {
   openFormModalElement.classList.remove('hidden');
   mainPage.classList.add('modal-open');
-  document.addEventListener('keydown', handleEsqKeydown)
+  document.addEventListener('keydown', handleEsqKeydown);
 };
 
 const closeModal = () => {
   openFormModalElement.classList.add('hidden');
   mainPage.classList.remove('modal-open');
-  document.removeEventListener('keydown', handleEsqKeydown)
+  document.removeEventListener('keydown', handleEsqKeydown);
 };
 
 //Открытие формы при загрузке файла
@@ -45,4 +45,4 @@ form.addEventListener('submit', (evt) => {
   if (isValid) {
     form.submit();
   }
-})
+});
