@@ -26,7 +26,7 @@ scaleBiggerButton.addEventListener('click', () => {
 });
 
 function setEffect() {
-  const effect = uploadFormElement.querySelector('.effect__radio:checked').value;
+  const effect = uploadFormElement.querySelector('.effects__radio:checked').value;
   const value = effectRangeValue.value;
   let filter = 'none';
   switch (effect) {
