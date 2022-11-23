@@ -3,6 +3,7 @@ const scaleSmallerButton = uploadFormElement.querySelector('.scale__control--sma
 const scaleBiggerButton = uploadFormElement.querySelector('.scale__control--bigger');
 const scaleValueButton = uploadFormElement.querySelector('.scale__control--value');
 const imagePreviewContainer = uploadFormElement.querySelector('.img-upload__preview');
+// eslint-disable-next-line no-unused-vars
 const imagePreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
 const sliderEffect = uploadFormElement.querySelector('.effect-level__slider');
 const effectsList = uploadFormElement.querySelector('.effects__list');
@@ -11,18 +12,20 @@ let slider;
 
 
 function setScale(scale) {
-  if(scale > 100) scale = 100;
-  if(scale < 25) scale = 25;
+  if(scale > 100) {scale = 100;}
+  if(scale < 25) {scale = 25;}
   scaleValueButton.value = `${scale}%`;
   imagePreviewContainer.style.transform = `scale(${scale / 100})`;
-};
+}
 
 scaleSmallerButton.addEventListener('click', () => {
-  setScale(parseInt(scaleValueButton.value) - 25)
+  // eslint-disable-next-line radix
+  setScale(parseInt(scaleValueButton.value) - 25);
 });
 
 scaleBiggerButton.addEventListener('click', () => {
-  setScale(parseInt(scaleValueButton.value) + 25)
+  // eslint-disable-next-line radix
+  setScale(parseInt(scaleValueButton.value) + 25);
 });
 
 function setEffect() {
@@ -31,24 +34,24 @@ function setEffect() {
   let filter = 'none';
   switch (effect) {
     case 'chrome':
-      filter = `grayscale(${value/100})`
+      filter = `grayscale(${value / 100})`;
       break;
     case 'sepia':
-      filter = `sepia(${value/100})`
+      filter = `sepia(${value / 100})`;
       break;
     case 'marvin':
-      filter = `invert(${value}%)`
+      filter = `invert(${value}%)`;
       break;
     case 'phobos':
-      filter = `blur(${value/100 * 3}px)`
+      filter = `blur(${value / 100 * 3}px)`;
       break;
     case 'heat':
-      filter = `brightless(${value/100 * 2 + 1})`
+      filter = `brightless(${value / 100 * 2 + 1})`;
       break;
     default:
       break;
-}
-imagePreviewContainer.style.filter = filter;
+  }
+  imagePreviewContainer.style.filter = filter;
 }
 
 function initialSlider() {
@@ -60,36 +63,38 @@ function initialSlider() {
     start: 100,
     connect: 'lower',
     step: 0.1,
-});
+  });
   sliderEffect.noUiSlider.on('update', () => {
     effectRangeValue.value = sliderEffect.noUiSlider.get();
     setEffect();
-});
+  });
 
   return sliderEffect;
 }
 
+// eslint-disable-next-line no-shadow
 function visibledSlider(slider) {
   slider.classList.remove('hidden');
 }
+// eslint-disable-next-line no-shadow
 function hiddedSlider(slider) {
-    slider.classList.add('hidden');
-  }
+  slider.classList.add('hidden');
+}
 
 function onChangeEffect (evt) {
-  if (!slider) slider = initialSlider();
+  if (!slider) {slider = initialSlider();}
   if(evt.target.value === 'marvin') {
     slider.noUiSlider.updateOptions({
       step: 1
     });
-} else {
+  } else {
     slider.noUiSlider.updateOptions({
       step: 0.1
-});
-}
+    });
+  }
   slider.noUiSlider.set(100);
-  visibledSlider(slider)
-  if(evt.target.value === 'none') hiddedSlider(slider);
+  visibledSlider(slider);
+  if(evt.target.value === 'none') {hiddedSlider(slider);}
   setEffect();
 }
 

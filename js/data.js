@@ -15,4 +15,4 @@ export function createPhoto() {
     likes: getRandomPositiveInteger(15, 200),
     comments: getRandomPositiveInteger(0, 200),
   };
-};
+}
