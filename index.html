@@ -106,14 +106,7 @@
 
                 <!-- Добавление комментария к изображению -->
                 <fieldset class="img-upload__text text">
-                    <textarea 
-                    class="text__description" 
-                    name="description" 
-                    placeholder="Ваш комментарий..." 
-                    required 
-                    minlength="20"
-                    data-pristine-min-message="Минимальная длинна 20 символов"
-                    data-pristine-requared-message="Поле обязательное для зпаполнения"></textarea>
+                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..." required minlength="20" data-pristine-min-message="Минимальная длинна 20 символов" data-pristine-requared-message="Поле обязательное для зпаполнения"></textarea>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -155,7 +148,7 @@
 
   <!-- Сообщение с ошибкой загрузки изображения -->
   <template id="error">
-    <section class="error">
+    <section class="error message-popup">
       <div class="error__inner">
         <h2 class="error__title">Ошибка загрузки файла</h2>
         <button type="button" class="error__button">Попробовать ещё раз</button>
@@ -165,7 +158,7 @@
 
   <!-- Сообщение об успешной загрузке изображения -->
   <template id="success">
-    <section class="success">
+    <section class="success message-popup">
       <div class="success__inner">
         <h2 class="success__title">Изображение успешно загружено</h2>
         <button type="button" class="success__button">Круто!</button>
