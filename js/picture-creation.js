@@ -1,14 +1,15 @@
-const pictureTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-export function createPhotoElement(data) {
+
+export const createPicture = (data) => {
   const pictureElement = pictureTemplate.cloneNode(true);
-  const imageNode = pictureElement.querySelector('.picture__img');
-  const commentsNode = pictureElement.querySelector('.picture__comments');
-  const likesNode = pictureElement.querySelector('.picture__likes');
-  commentsNode.textContent = data.likes;
-  likesNode.textContent = data.comments;
-  imageNode.src = data.url;
+  const imageElement = pictureElement.querySelector('.picture__img');
+  const commenElement = pictureElement.querySelector('.picture__comments');
+  const likesElement = pictureElement.querySelector('.picture__likes');
+
+  imageElement.src = data.url;
+  commenElement.textContent = data.comments;
+  likesElement.textContent = data.likes;
+
   return pictureElement;
-}
+};

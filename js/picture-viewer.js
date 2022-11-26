@@ -1,3 +1,5 @@
+import { makeRequest } from './api.js';
+import { createErrorMessage, createSuccessMessage } from './message.js';
 import { isEscapeKey } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -12,7 +14,7 @@ const openModal = () => {
   document.addEventListener('keydown', handleEsqKeydown);
 };
 
-const closeModal = () => {
+export const closeModal = () => {
   openFormModalElement.classList.add('hidden');
   mainPage.classList.remove('modal-open');
   document.removeEventListener('keydown', handleEsqKeydown);
@@ -39,10 +41,21 @@ const pristine = new Pristine(form, {
   errorTextClass: 'text__description--text',
 });
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    form.submit();
-  }
-});
+const setFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const onSuccessForm = () => {
+      onSuccess();
+      createSuccessMessage();
+    };
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+      makeRequest({ onSuccess: onSuccessForm, body: formData, method: 'POST', onFail: createErrorMessage });
+    }
+  });
+};
+
+export { setFormSubmit };

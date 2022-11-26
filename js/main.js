@@ -1,15 +1,24 @@
 import './picture-viewer.js';
 import './picture-editor.js';
-import {createPhoto} from './data.js';
-import { createPhotoElement } from './picture-creation.js';
+import { createPicture } from './picture-creation.js';
+import { makeRequest } from './api.js';
+import { closeModal, setFormSubmit } from './picture-viewer.js';
+import { createErrorMessage } from './message.js';
 
-const picturesContainer = document.querySelector('.pictures');
+const containerPictures = document.querySelector('.pictures');
 
-const resultArray = Array.from({length: 25}, createPhoto);
-const similarListFragment = document.createDocumentFragment();
+const renderSimilarPictures = (similarPicrure) => {
+  const similarListFragment = document.createDocumentFragment();
+  similarPicrure.forEach((dataPic) => {
+    similarListFragment.append(createPicture(dataPic));
+  });
+  containerPictures.append(similarListFragment);
+};
 
-resultArray.forEach((dataPic) => {
-  similarListFragment.append(createPhotoElement(dataPic));
-});
+const onSuccessData = (pictures) => {
+  renderSimilarPictures(pictures);
+};
 
-picturesContainer.append(similarListFragment);
+setFormSubmit(closeModal);
+
+makeRequest({endpoint: 'data', onSuccess:onSuccessData, onFail: createErrorMessage});
