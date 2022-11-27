@@ -1,36 +1,44 @@
+import {
+  MAX_SCALE_IMAGE,
+  MIN_SCALE_IMAGE,
+  SCALE_STEP,
+  MIN_SLIDER_VALUE,
+  MAX_SLIDER_VALUE,
+  START_SLIDER_VALUE,
+  STEP_SLIDER_DEFAULT,
+  START_SLIDER_MARVIN
+} from './constants.js';
+
 const uploadFormElement = document.querySelector('#upload-select-image');
-const scaleSmallerButton = uploadFormElement.querySelector('.scale__control--smaller');
-const scaleBiggerButton = uploadFormElement.querySelector('.scale__control--bigger');
-const scaleValueButton = uploadFormElement.querySelector('.scale__control--value');
-const imagePreviewContainer = uploadFormElement.querySelector('.img-upload__preview');
-// eslint-disable-next-line no-unused-vars
+const scaleSmallerButtonElement = uploadFormElement.querySelector('.scale__control--smaller');
+const scaleBiggerButtonElement = uploadFormElement.querySelector('.scale__control--bigger');
+const scaleValueButtonElement = uploadFormElement.querySelector('.scale__control--value');
+const imagePreviewContainerElement = uploadFormElement.querySelector('.img-upload__preview');
 const imagePreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
-const sliderEffect = uploadFormElement.querySelector('.effect-level__slider');
-const effectsList = uploadFormElement.querySelector('.effects__list');
-const effectRangeValue = uploadFormElement.querySelector('.effect-level__value');
+const sliderEffectElement = uploadFormElement.querySelector('.effect-level__slider');
+const effectsListElement = uploadFormElement.querySelector('.effects__list');
+const effectRangeValueElement = uploadFormElement.querySelector('.effect-level__value');
 let slider;
 
 
 function setScale(scale) {
-  if(scale > 100) {scale = 100;}
-  if(scale < 25) {scale = 25;}
-  scaleValueButton.value = `${scale}%`;
-  imagePreviewContainer.style.transform = `scale(${scale / 100})`;
+  if(scale > MAX_SCALE_IMAGE) {scale = MAX_SCALE_IMAGE;}
+  if(scale < MIN_SCALE_IMAGE) {scale = MIN_SCALE_IMAGE;}
+  scaleValueButtonElement.value = `${scale}%`;
+  imagePreviewElement.style.transform = `scale(${scale / 100})`;
 }
 
-scaleSmallerButton.addEventListener('click', () => {
-  // eslint-disable-next-line radix
-  setScale(parseInt(scaleValueButton.value) - 25);
+scaleSmallerButtonElement.addEventListener('click', () => {
+  setScale(parseInt(scaleValueButtonElement.value, 10) - SCALE_STEP);
 });
 
-scaleBiggerButton.addEventListener('click', () => {
-  // eslint-disable-next-line radix
-  setScale(parseInt(scaleValueButton.value) + 25);
+scaleBiggerButtonElement.addEventListener('click', () => {
+  setScale(parseInt(scaleValueButtonElement.value, 10) + SCALE_STEP);
 });
 
 function setEffect() {
   const effect = uploadFormElement.querySelector('.effects__radio:checked').value;
-  const value = effectRangeValue.value;
+  const value = effectRangeValueElement.value;
   let filter = 'none';
   switch (effect) {
     case 'chrome':
@@ -51,51 +59,50 @@ function setEffect() {
     default:
       break;
   }
-  imagePreviewContainer.style.filter = filter;
+  imagePreviewContainerElement.style.filter = filter;
 }
 
 function initialSlider() {
-  noUiSlider.create(sliderEffect, {
+  noUiSlider.create(sliderEffectElement, {
     range: {
-      'min': 0,
-      'max': 100,
+      'min': MIN_SLIDER_VALUE,
+      'max': MAX_SLIDER_VALUE,
     },
-    start: 100,
+    start: START_SLIDER_VALUE,
     connect: 'lower',
-    step: 0.1,
+    step: STEP_SLIDER_DEFAULT,
   });
-  sliderEffect.noUiSlider.on('update', () => {
-    effectRangeValue.value = sliderEffect.noUiSlider.get();
+  sliderEffectElement.noUiSlider.on('update', () => {
+    effectRangeValueElement.value = sliderEffectElement.noUiSlider.get();
     setEffect();
   });
 
-  return sliderEffect;
+  return sliderEffectElement;
 }
 
-// eslint-disable-next-line no-shadow
-function visibledSlider(slider) {
-  slider.classList.remove('hidden');
+function visibleSlider(sliderElement) {
+  sliderElement.classList.remove('hidden');
 }
-// eslint-disable-next-line no-shadow
-function hiddedSlider(slider) {
-  slider.classList.add('hidden');
+
+function hiddenSlider(sliderElement) {
+  sliderElement.classList.add('hidden');
 }
 
 function onChangeEffect (evt) {
   if (!slider) {slider = initialSlider();}
   if(evt.target.value === 'marvin') {
     slider.noUiSlider.updateOptions({
-      step: 1
+      step: START_SLIDER_MARVIN
     });
   } else {
     slider.noUiSlider.updateOptions({
-      step: 0.1
+      step: STEP_SLIDER_DEFAULT
     });
   }
-  slider.noUiSlider.set(100);
-  visibledSlider(slider);
-  if(evt.target.value === 'none') {hiddedSlider(slider);}
+  slider.noUiSlider.set(START_SLIDER_VALUE);
+  visibleSlider(slider);
+  if(evt.target.value === 'none') {hiddenSlider(slider);}
   setEffect();
 }
 
-effectsList.addEventListener('change', onChangeEffect);
+effectsListElement.addEventListener('change', onChangeEffect);
