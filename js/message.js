@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 
-const pageContainer = document.querySelector('body');
+const pageContainerElement = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
@@ -9,8 +9,8 @@ const successMessageTemplate = document.querySelector('#success')
 function onMessageEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    const activeMessage = document.querySelector('.message-popup');
-    if(activeMessage) {closeMessage(activeMessage);}
+    const activeMessageElement = document.querySelector('.message-popup');
+    if(activeMessageElement) {closeMessage(activeMessageElement);}
   }
 }
 
@@ -26,7 +26,7 @@ function closeMessage(messageElement) {
 
 function createSuccessMessage() {
   const successMessageElement = successMessageTemplate.cloneNode(true);
-  openMessage(pageContainer, successMessageElement);
+  openMessage(pageContainerElement, successMessageElement);
 
   successMessageElement.addEventListener('click', () => {
     closeMessage(successMessageElement);
@@ -41,7 +41,7 @@ function createErrorMessage(err) {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
   const errorMessageElementTitle = errorMessageElement.querySelector('.error__title');
   errorMessageElementTitle.textContent = err?.message || 'Ошибка загрузки файла';
-  openMessage(pageContainer, errorMessageElement);
+  openMessage(pageContainerElement, errorMessageElement);
 
   errorMessageElement.addEventListener('click', () => {
     closeMessage(errorMessageElement);

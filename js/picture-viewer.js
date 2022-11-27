@@ -2,26 +2,27 @@ import { makeRequest } from './api.js';
 import { createErrorMessage, createSuccessMessage } from './message.js';
 import { isEscapeKey } from './util.js';
 
-const form = document.querySelector('.img-upload__form');
-const formInput = document.querySelector('#upload-file');
+const formElement = document.querySelector('.img-upload__form');
+const formInputElement = document.querySelector('#upload-file');
 const openFormModalElement = document.querySelector('.img-upload__overlay');
 const closeFormModalElement = document.querySelector('#upload-cancel');
-const mainPage = document.querySelector('body');
+const mainPageElement = document.querySelector('body');
 
 const openModal = () => {
   openFormModalElement.classList.remove('hidden');
-  mainPage.classList.add('modal-open');
+  mainPageElement.classList.add('modal-open');
   document.addEventListener('keydown', handleEsqKeydown);
 };
 
 export const closeModal = () => {
   openFormModalElement.classList.add('hidden');
-  mainPage.classList.remove('modal-open');
+  mainPageElement.classList.remove('modal-open');
+  formElement.reset();
   document.removeEventListener('keydown', handleEsqKeydown);
 };
 
 //Открытие формы при загрузке файла
-formInput.addEventListener('change', openModal);
+formInputElement.addEventListener('change', openModal);
 
 
 // //Закрытие формы
@@ -35,14 +36,14 @@ function handleEsqKeydown (evt) {
 }
 
 // //Валидация комментария в форме
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'text__description--text',
 });
 
 const setFormSubmit = (onSuccess) => {
-  form.addEventListener('submit', (evt) => {
+  formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const onSuccessForm = () => {
