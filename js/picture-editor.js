@@ -36,6 +36,10 @@ scaleBiggerButtonElement.addEventListener('click', () => {
   setScale(parseInt(scaleValueButtonElement.value, 10) + SCALE_STEP);
 });
 
+function clearEffect() {
+  imagePreviewContainerElement.style.filter = '';
+}
+
 function setEffect() {
   const effect = uploadFormElement.querySelector('.effects__radio:checked').value;
   const value = effectRangeValueElement.value;
@@ -54,7 +58,7 @@ function setEffect() {
       filter = `blur(${value / 100 * 3}px)`;
       break;
     case 'heat':
-      filter = `brightless(${value / 100 * 2 + 1})`;
+      filter = `brightness(${value / 100 * 2 + 1})`;
       break;
     default:
       break;
@@ -78,6 +82,16 @@ function initialSlider() {
   });
 
   return sliderEffectElement;
+}
+
+export function clearSliderSettings() {
+  if(slider){
+    slider.noUiSlider.destroy();
+    slider = null;
+  }
+  setScale(MAX_SCALE_IMAGE);
+  clearEffect();
+
 }
 
 function visibleSlider(sliderElement) {

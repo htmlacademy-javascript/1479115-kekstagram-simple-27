@@ -1,5 +1,6 @@
 import { makeRequest } from './api.js';
 import { createErrorMessage, createSuccessMessage } from './message.js';
+import { clearSliderSettings } from './picture-editor.js';
 import { isEscapeKey } from './util.js';
 
 const formElement = document.querySelector('.img-upload__form');
@@ -7,6 +8,12 @@ const formInputElement = document.querySelector('#upload-file');
 const openFormModalElement = document.querySelector('.img-upload__overlay');
 const closeFormModalElement = document.querySelector('#upload-cancel');
 const mainPageElement = document.querySelector('body');
+
+const clearModal = () => {
+  formElement.reset();
+  clearSliderSettings();
+};
+
 
 const openModal = () => {
   openFormModalElement.classList.remove('hidden');
@@ -17,7 +24,7 @@ const openModal = () => {
 export const closeModal = () => {
   openFormModalElement.classList.add('hidden');
   mainPageElement.classList.remove('modal-open');
-  formElement.reset();
+  clearModal();
   document.removeEventListener('keydown', handleEsqKeydown);
 };
 
@@ -28,7 +35,7 @@ formInputElement.addEventListener('change', openModal);
 // //Закрытие формы
 closeFormModalElement.addEventListener('click',closeModal);
 
-function handleEsqKeydown (evt) {
+export function handleEsqKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
